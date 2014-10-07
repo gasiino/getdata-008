@@ -11,18 +11,25 @@ The labelling we have chosen is explained later on in this document.
 
 Data comes with train and test sets but for the sake of this exercise, they are merged together in a unique dataset.
 
+About the actual values of the observations, they are all floating numbers (automatically loaded as numeric).
+
+The subjects and activities are collected using ids. We do susbstitute the activities with the corresponding name, but we don't have the same information for the actual subjects so we leave them as integer ids in our data frames.
+
+We do not perform transformations of the formats so we can be independent from considerations about the units of each feature and its representation.
+
 ##1. Merge the training and the test sets to create one data set.
 
 ### get zip file 
 download file - this is a step that can be avoided if the zip file is already available.
-However the following step assumes the file in the same current folder with name "UCI HAR Dataset.zip"
+However the following step assumes the file in the same current folder with name "UCI HAR Dataset.zip". 
+So please un comment the line and perform this step if it's convenient to download it again for you.
 
 ###unzip the file
-files are unzipped in current folder as the zip file contains a folder "UCI HAR Dataset"
+Files are unzipped in current folder as the zip file contains a folder "UCI HAR Dataset"
 
 ### load data
 
-the following files are loaded into variables with the same name as the file (without extension) using read.table with header=FALSE
+The following files are loaded into variables with the same name as the file (without extension) using read.table with header=FALSE
 
 <li>subject_test.txt</li>
 <li>x_test.txt</li>
@@ -35,7 +42,7 @@ test data frames have 2947 rows
 
 train data frames have 7352 rows
 
-subject data frames contain the subject that has performed the activity for  each observation (1 column only)
+subject data frames contain the subject that has performed the activity for each observation (1 column only)
 
 y data frames contain the activity code per each obesrvation (1 column only)
 
