@@ -3,7 +3,9 @@ getdata-008
 
 ###Assignment for course getdata-008
 
-Please note that code_book.md explains the code transformations to clean up the data.
+Please note that "CodeBook.md"" explains the code transformations to clean up the data.
+
+There is only one script called "run_analysis.R"" which is explained both in the comments inside the scripts and also in the file "CodeBook.md""
 
 There is little to explain about the nature of the values.
 
