@@ -1,9 +1,15 @@
+Code Book
+===========
 
+This document describes transformations performed in the code to obtain a clean dataset.
 
-Considerations about the raw data.
+Considerations about the raw data:
+
 Raw data has no helpful labels. Data is stored using a positional pattern so the hundreds of columns related to the features are valid only if the features description is in the same order as the columns. 
+
 The labelling we have chosen is explained later on in this document.
-Data comes with train and test sets but for the sake of this exercise, the yare merged together in a unique dataset.
+
+Data comes with train and test sets but for the sake of this exercise, they are merged together in a unique dataset.
 
 ##1. Merge the training and the test sets to create one data set.
 
@@ -18,17 +24,19 @@ files are unzipped in current folder as the zip file contains a folder "UCI HAR 
 
 the following files are loaded into variables with the same name as the file (without extension) using read.table with header=FALSE
 
-subject_test.txt
-x_test.txt
-y_test.txt
-subject_train.txt
-x_train.txt
-y_train.txt
+<li>subject_test.txt</li>
+<li>x_test.txt</li>
+<li>y_test.txt</li>
+<li>subject_train.txt</li>
+<li>x_train.txt</li>
+<li>y_train.txt</li>
 
 test data frames have 2947 rows 
+
 train data frames have 7352 rows
 
 subject data frames contain the subject that has performed the activity for  each observation (1 column only)
+
 y data frames contain the activity code per each obesrvation (1 column only)
 
 x data frames contain all the values for the many variables related to each observation (561 columns)
@@ -40,6 +48,7 @@ We create one data frame for all the train data, using the columns for the subje
 We also create one data frame for all the test data, using the columns for the subject (from subject_test), for the activity code (from y_test) a type ("test" for all the rows) and all the values from the observations (from x_test). The new dataframe has 2947 rows and 564 columns.
 
 Last, we merge together these two data frames using rbind.
+
 Our dataset contains now 10299 observations of 564 variables.
 
 ##2. Extract only the measurements on the mean and standard deviation for each measurement. 
@@ -48,10 +57,16 @@ Our dataset contains now 10299 observations of 564 variables.
 we retrieve the features from the file features.txt
 
 We create from it a data frame by decomposing the names we find, to identify a signal, variable and direction related to each feature. 
+
 we also give a name to each feature using the pattern featureN where N is its order number.
 There are 561 features.
-We select only those with signal equal to "mean()" and "std()" and we give them their original name back (concatenation of signal, variable and direction).
+
+
+### filter only the measurements for mean and std
+We select only the features with signal equal to "mean()" and "std()" and we give them their original name back (concatenation of signal, variable and direction).
+
 Therefore all the other features (not mean or std) will keep name in the form "featureN".
+
 Because the order of the features is the same as the observation columns of our dataset, we use the subset of columns containing "feature" in the name to remove all the columns that are not required.
 
 Our dataset becomes a data frame of 10299 observations of 69 variables.
@@ -59,7 +74,9 @@ Our dataset becomes a data frame of 10299 observations of 69 variables.
 ##3. Use descriptive activity names to name the activities in the data set
 
 So far the activities have been expressed with a code.
+
 We retrieve the activity names from the file activity_labels.txt and we replace the code with the actual name of the activity. 
+
 The activities are the following:
 <ul>
 <li>WALKING</li>
@@ -73,9 +90,13 @@ The activities are the following:
 ##4. Appropriately label the data set with descriptive variable names. 
 
 So far the dataset had non-relevant column names.
+
 We assign proper column names.
+
 The first three column will be "subject","activity","type".
+
 The following columns will have the name of the feature, as already stored in the features data frame.
+
 These are the column names:
 <ol>
 <li>subject</li>
@@ -154,6 +175,7 @@ These are the column names:
 We use the function aggregate, to perform a mean on each column, using as grouping columns both activity and subject, and ignoring the column "type".
 
 The new dataset contains only 180 observations of 68 variables.
+
 Apart from activity and subject, all the other variables are means of the related feature for the specific combination of activity and subject.
 
 

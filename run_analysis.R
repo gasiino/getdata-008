@@ -22,16 +22,21 @@ test<-data.frame(subject_test, y_test,type="test",x_test)
 dataset<-rbind(test,train)
 
 ##2. Extracts only the measurements on the mean and standard deviation for each measurement. 
+# we retrieve the file using readLines
 con <- file("UCI HAR Dataset/features.txt", "r", blocking = FALSE)
 feat_temp<-readLines(con)
 close(con)
-
+# by replacing "-" with space, we can parse the lines in a uniform manner to get a data frame
 feat_temp<-gsub("-"," ",feat_temp)
 features<- read.table(textConnection(feat_temp),header=FALSE,fill=TRUE, colClasses=c("integer",rep("character",3)), col.names=c("n","signal","variable","direction"))
+# we assign names to all the features
 features$name<-paste("feature",as.character(features$n),sep="")
+
 index<-features$variable=="mean()" | features$variable=="std()"
+# only the features related to signal "mean()" or "std()" get a name that is not featureN
 features$name[index]<-paste(features$signal,features$variable,features$direction,sep="-")[index]
 
+#all the columns corresponding to features named featureN are removed
 removecols<-grep("feature",features$name) #,value=TRUE)
 dataset<-dataset[ -(removecols+3)]
 
